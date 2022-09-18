@@ -159,12 +159,66 @@ z.ts = ts(z)
 ts.plot(z.ts, lty=1:4, main="Figure 2-12 S-Cruves")
 legend("right", legend=c("Exp", "Gompertz", "Von", "Pearl"), lty=1:4)
 
+## Exersize 2.2
+z = c(303, 298, 303, 314, 303, 314, 310, 324, 317, 326, 323, 324,331, 330, 332)
+t = 1:length(z)
+z.ts = ts(z)
+model = lm(z ~ t)
+ts.plot(resid(model), type="o", ylab="residual")
+abline(h=0)
 
+acf(resid(model))
 
+new_data = data.frame(t=c(16,17,18,19,20))
+pred = data.frame(predict(model, newdata=new_data, interval='confidence'))
 
+new_z = c(z, pred$fit)
+new_z.ts = ts(new_z)
+ts.plot(new_z.ts, type="o")
+lines(new_data$t, pred$lwr, lty=2, col="blue")
+lines(new_data$t, pred$upr, lty=2, col="blue")
 
+## Exercise 2.6
+dept = scan("data/depart.txt")
+t = 1:length(dept)
+dept.ts = ts(dept, frequency=12, start=c(1984, 1))
+lndept = log(dept.ts)
 
+ts.plot(dept.ts)
 
+x1 = sin(2 * pi * t / 12)
+x2 = cos(2 * pi * t / 12)
+x3 = sin(2 * pi * t / 12*2)
+x4 = cos(2 * pi * t / 12*2)
+x5 = sin(2 * pi * t / 12*3)
+x6 = cos(2 * pi * t / 12*3)
+x7 = sin(2 * pi * t / 12*4)
+x8 = cos(2 * pi * t / 12*4)
+x9 = sin(2 * pi * t / 12*6)
+x10 = cos(2 * pi * t / 12*6)
 
+model = lm(lndept ~ t + x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10)
+summary(model)
 
+ts.plot(ts(resid(model)))
+acf(resid(model))
+
+## Exercise 2.9
+z = scan("data/book.txt")
+t = 1:length(z)
+
+model = lm(book ~ t)
+summary(model)
+
+ts.plot(resid(model), type="o", ylab="residual")
+abline(h=0)
+
+new_data = data.frame(t=c(31:42))
+pred = data.frame(predict(model, newdata=new_data, interval='confidence'))
+
+new_z = c(z, pred$fit)
+new_z.ts = ts(new_z)
+ts.plot(new_z.ts, type="o")
+lines(new_data$t, pred$lwr, lty=2, col="blue")
+lines(new_data$t, pred$upr, lty=2, col="blue")
 
