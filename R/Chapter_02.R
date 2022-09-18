@@ -204,7 +204,7 @@ ts.plot(ts(resid(model)))
 acf(resid(model))
 
 ## Exercise 2.9
-z = scan("data/book.txt")
+book = scan("data/book.txt")
 t = 1:length(z)
 
 model = lm(book ~ t)
