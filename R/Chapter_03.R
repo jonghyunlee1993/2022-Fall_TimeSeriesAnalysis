@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("Workspace/2022-Fall_TimeSeriesAnalysis/")
+setwd("~/Workspace/2022-Fall_TimeSeriesAnalysis/")
 par(family="AppleGothic")
 
 # Example 3.1
@@ -41,9 +41,11 @@ plot(fit2, xlab="year", ylab="mindex",
 lines(fitted(fit2), col="red", lty=2)
 legend("topright", legend=c("Mindex", "alpha=0.2"),
        lty=1:2, col=c("black", "red"))
+
 plot(fit2$residuals, ylab="residual",
      main="그림 3-5 예측오차의 시계열 그림: alpha=0.2")
 abline(h=0)
+
 # 두 모형의 비교
 round(rbind(accuracy(fit1), accuracy(fit2)), digit=3)
 
@@ -55,6 +57,7 @@ plot(fit3, xlab="year", ylab="mindex",
 lines(fit3$fitted, col="red", lty=2)
 legend("topright", legend=c("Mindex", "estimated_alpha"),
        lty=1:2, col=c("black", "red"))
+
 plot(fit3$residuals, ylab="residual",
      main="예측오차의 시계열그림: 추정된 alpha")
 abline(h=0)
@@ -76,6 +79,7 @@ legend("topleft", lty=1:2, col=c("black", "red"), c("Index", "Double"))
 
 plot(resid(fit4), main="그림 3-7 예측오차의 시계열 그림")
 abline(h=0)
+
 acf(resid(fit4))
 t.test(resid(fit4), mu=0)
 
@@ -106,6 +110,7 @@ plot(fit6, ylab="passenger", xlab="year", lty=1, col="blue",
      main="그림 3-8 가법모형")
 lines(fit6$fitted, col="red", lty=2)
 legend("topleft", lty=1:2, col=c("blue", "red"), c("Pass", "Additive"))
+
 ts.plot(resid(fit6), ylab="residual",
         main="그림 3-10 가법모형의 예측 오차")
 abline(h=0)
