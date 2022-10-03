@@ -87,6 +87,77 @@ ts.plot(food, food.sa, ylab="food", lty=1:2, col=c("blue", "red"),
 legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
 
+# Exercise 4.4 - 1
+z = scan("data/build.txt")
+build = ts(z, start=c(1981, 1), frequency=12)
+
+m = decompose(build, type=c("additive"))
+trend = trendcycle(m)
+seasonal = seasonal(m)
+irregular = remainder(m)
+adjseasonal = build - seasonal
+
+ts.plot(build, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+        main="원시계열과 계절 조정")
+legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
 
+# Exercise 4.4 - 2
+z = scan("data/export.txt")
+export = ts(z, start=c(1981, 1), frequency=12)
+
+m = decompose(export, type=c("additive"))
+trend = trendcycle(m)
+seasonal = seasonal(m)
+irregular = remainder(m)
+adjseasonal = export - seasonal
+
+ts.plot(export, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+        main="원시계열과 계절 조정")
+legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
+
+
+# Exercise 4.4 - 3
+z = scan("data/usapass.txt")
+usapass = ts(z, start=c(1981, 1), frequency=12)
+
+m = decompose(usapass, type=c("additive"))
+trend = trendcycle(m)
+seasonal = seasonal(m)
+irregular = remainder(m)
+adjseasonal = usapass - seasonal
+
+ts.plot(usapass, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+        main="원시계열과 계절 조정")
+legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
+
+
+# Exercise 4.4 - 4
+z = scan("data/depart.txt")
+depart = ts(z, start=c(1981, 1), frequency=12)
+
+m = decompose(depart, type=c("additive"))
+trend = trendcycle(m)
+seasonal = seasonal(m)
+irregular = remainder(m)
+adjseasonal = depart - seasonal
+
+ts.plot(depart, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+        main="원시계열과 계절 조정")
+legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
+
+
+# Exercise 4.4 - 5
+z = scan("data/koreapass.txt")
+koreapass = ts(z, start=c(1981, 1), frequency=12)
+
+m = decompose(koreapass, type=c("additive"))
+trend = trendcycle(m)
+seasonal = seasonal(m)
+irregular = remainder(m)
+adjseasonal = koreapass - seasonal
+
+ts.plot(koreapass, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+        main="원시계열과 계절 조정")
+legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
