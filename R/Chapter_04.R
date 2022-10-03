@@ -3,6 +3,7 @@ rm(list=ls())
 setwd("~/Workspace/2022-Fall_TimeSeriesAnalysis/")
 par(family="AppleGothic")
 
+library(lmtest)
 library(forecast)
 library(lubridate)
 
@@ -17,9 +18,13 @@ trend = fitted(fit)
 ts.plot(food, trend, col=1:2, lty=1:2, ylab="food", xlab="time",
         main="그림 4-1 원시계열과 분해법에 의한 추세성분")
 legend("topleft", lty=1:2, col=1:2, c("원시계열", "추세성분"))
-adjtrend = food / trend
 
+adjtrend = food / trend
 y = factor(cycle(adjtrend))
+
+temp_lm = lm(adjtrend ~ y + 0)
+dwtest(temp_lm)
+
 fit1 = auto.arima(adjtrend, max.p=2, xreg=model.matrix(~ 0 + y)[, -12],
                   seasonal=F, max.d=0, max.q=0)
 fit1
@@ -97,7 +102,7 @@ seasonal = seasonal(m)
 irregular = remainder(m)
 adjseasonal = build - seasonal
 
-ts.plot(build, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+ts.plot(build, adjseasonal, ylab="build", lty=1:2, col=c("blue", "red"),
         main="원시계열과 계절 조정")
 legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
@@ -112,7 +117,7 @@ seasonal = seasonal(m)
 irregular = remainder(m)
 adjseasonal = export - seasonal
 
-ts.plot(export, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+ts.plot(export, adjseasonal, ylab="export", lty=1:2, col=c("blue", "red"),
         main="원시계열과 계절 조정")
 legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
@@ -127,7 +132,7 @@ seasonal = seasonal(m)
 irregular = remainder(m)
 adjseasonal = usapass - seasonal
 
-ts.plot(usapass, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+ts.plot(usapass, adjseasonal, ylab="usapass", lty=1:2, col=c("blue", "red"),
         main="원시계열과 계절 조정")
 legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
@@ -142,7 +147,7 @@ seasonal = seasonal(m)
 irregular = remainder(m)
 adjseasonal = depart - seasonal
 
-ts.plot(depart, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+ts.plot(depart, adjseasonal, ylab="depart", lty=1:2, col=c("blue", "red"),
         main="원시계열과 계절 조정")
 legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
@@ -157,7 +162,7 @@ seasonal = seasonal(m)
 irregular = remainder(m)
 adjseasonal = koreapass - seasonal
 
-ts.plot(koreapass, adjseasonal, ylab="food", lty=1:2, col=c("blue", "red"),
+ts.plot(koreapass, adjseasonal, ylab="koreapass", lty=1:2, col=c("blue", "red"),
         main="원시계열과 계절 조정")
 legend("topleft", lty=1:2, col=c("blue", "red"), c("원시계열", "계절조정"))
 
