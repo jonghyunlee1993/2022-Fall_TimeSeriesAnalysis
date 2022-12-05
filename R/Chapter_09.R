@@ -1,39 +1,35 @@
 rm(list=ls())
 
 setwd("~/Workspace/2022-Fall_TimeSeriesAnalysis/data/")
+par(family="AppleGothic")
 
-# 10.5
+# 9.1
 library(astsa)
-tour = scan("tourist.txt")
-ts.plot(tour, ylab="tourist", main="그림 10-7 국내 입국 관광객 자료의 시계열 그림")
-ltour = log(tour)
+z = scan("eg8_7.txt")
+par(mfrow=c(1,1))
+ts.plot(z, ylab="z", main="Simulated AR(1) process")
+acf2(z, max.lag=24, main="AR(1) 과정의 ACF & PACF")
+sarima.for(z, 25, 1, 0, 0)
 
-ts.plot(ltour, ylab="log tourist", main="그림 10-8 로그변환된 자료의 시계열 그림")
-d12tour = diff(ltour, lag=12)
-ts.plot(d12tour, ylab="seasonal diff", main="그림 10-9 로그 변환과 계절 차분된 자료의 시계열 그림")
-acf2(d12tour, max.lag=36, main="그림 10-9 SACF & SPACF")
+# 9.5
+z = scan("eg9_5.txt")
+par(mfrow=c(1,1))
+ts.plot(z, ylab="z", main="그림 9-2 모의 실험 자료")
+acf2(z, max.lag=24, main="그림 9-2 SACF & SPACF")
 
-d1tour = diff(ltour, lag=1)
-ts.plot(d1tour, ylab="1st diff", main="그림 10-10 로그 변환과 1차 차분된 자료의 시계열 그림")
+par(mfrow=c(1,1))
+ts.plot(diff(z), main="그림 9-3 1차 차분된 모의 실험 자료")
 abline(h=0)
-acf2(d1tour, max.lag=36, main="그림 10-10 SACF & SPACF")
+acf2(diff(z), max.lag=24, main="그림 9-3 SACF & SPACF")
 
-d1_12tour = diff(d12tour)
-ts.plot(d1_12tour, ylab="diff", main="그림 10-11 로그 변환과 계절 및 1차 차분된 자료의 시계열 그림")
-abline(h=0)
-acf2(d1_12tour, max.lag=36, main="그림 10-11 SACF & SPACF")
-fit1 = arima(ltour, order=c(0, 1, 1), seasonal=list(order=c(0, 1, 1), period=12))
-fit1
-
-ts.plot(resid(fit1), main="그림 10-12 잔차의 시계열 그림")
+fit = arima(z, order=c(0, 1, 1))
+par(mfrow=c(1,1))
+ts.plot(resid(fit), main="그림 9-4 ARIMA(0, 1, 1) 적합 후의 잔차")
 abline(h=0)
 
-acf2(resid(fit1), main="그림 10-13 RSACF & RSPACF")
-Box.test(resid(fit1), lag=6, type="Ljung", fitdf=0)
-fit2 = arima(ltour, order=c(0,1,1), seasonal=list(order=c(1,1,0), period=12))
-fit2
+acf2(resid(fit), main="그림 9-4 잔차의 SACF & SPACF")
+sarima.for(z, 25, 0, 1, 1)
 
-ts.plot(resid(fit2), main="잔차의 시계열 그림")
-abline(h=0)
 
-acf2(resid(fit1), main="RSACF & RSPACF")
+
+
